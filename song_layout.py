@@ -9,51 +9,56 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.setEnabled(True)
+        MainWindow.resize(682, 723)
+        MainWindow.setLayoutDirection(QtCore.Qt.LeftToRight)
+        MainWindow.setStyleSheet("background-color: hsl(55,45%,90%);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setEnabled(True)
+        self.centralwidget.setStyleSheet("")
         self.centralwidget.setObjectName("centralwidget")
-        self.formLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.formLayoutWidget.setGeometry(QtCore.QRect(10, 20, 221, 61))
-        self.formLayoutWidget.setObjectName("formLayoutWidget")
-        self.formLayout = QtWidgets.QFormLayout(self.formLayoutWidget)
-        self.formLayout.setContentsMargins(0, 0, 0, 0)
-        self.formLayout.setObjectName("formLayout")
-        self.label = QtWidgets.QLabel(self.formLayoutWidget)
+        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName("gridLayout")
+        self.listView = QtWidgets.QListView(self.centralwidget)
+        self.listView.setStyleSheet("background-color: #ffffff;")
+        self.listView.setObjectName("listView")
+        self.gridLayout.addWidget(self.listView, 4, 1, 1, 1)
+        self.label = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Segoe Print")
         font.setItalic(False)
         self.label.setFont(font)
         self.label.setObjectName("label")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label)
-        self.lineEdit = QtWidgets.QLineEdit(self.formLayoutWidget)
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.formLayout = QtWidgets.QFormLayout()
+        self.formLayout.setObjectName("formLayout")
+        self.gridLayout.addLayout(self.formLayout, 2, 0, 1, 1)
+        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setObjectName("lineEdit")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit)
-        self.label_2 = QtWidgets.QLabel(self.formLayoutWidget)
+        self.gridLayout.addWidget(self.lineEdit, 0, 1, 1, 1)
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Segoe Print")
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_2)
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.formLayoutWidget)
+        self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
+        self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_2.setObjectName("lineEdit_2")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.lineEdit_2)
+        self.gridLayout.addWidget(self.lineEdit_2, 1, 1, 1, 1)
         self.Analyze = QtWidgets.QPushButton(self.centralwidget)
-        self.Analyze.setGeometry(QtCore.QRect(10, 80, 75, 21))
-        self.Analyze.setStyleSheet("font: 8pt \"Segoe Print\";\n"
-" font-weight: 900;\n"
-"  color: #202121;\n"
-"  padding: 1.25rem 2rem;\n"
-"  background: #fff;\n"
-"  text-transform: uppercase;;\n"
+        self.Analyze.setStyleSheet("background-color:#ffffff;\n"
+"\n"
+"\n"
 "")
         self.Analyze.setObjectName("Analyze")
+        self.gridLayout.addWidget(self.Analyze, 3, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 682, 21))
+        self.menubar.setStyleSheet("")
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -69,13 +74,4 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Song Name:</span></p></body></html>"))
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Artist:</span></p></body></html>"))
         self.Analyze.setText(_translate("MainWindow", "Analyze"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+        
