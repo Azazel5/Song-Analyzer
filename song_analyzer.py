@@ -1,11 +1,11 @@
 # Song Lyrics Analyzer
 
-import config  
+
 import json
 import sys 
 import re
 import urllib.request
-import tkinter as tk
+import config 
 from ibm_watson import NaturalLanguageUnderstandingV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from bs4 import BeautifulSoup
@@ -18,7 +18,6 @@ from ibm_watson.natural_language_understanding_v1 import (
     RelationsOptions,
     MetadataOptions
 )
-
 
 authenticator = IAMAuthenticator(
     config.api_key)
@@ -75,30 +74,6 @@ def analyze_emotion(lyrics):
 
     print(json.dumps(response, indent=2))
 
-
-
-#def submit_form():
- #   lyrics = get_lyrics_from_AZwebsite(artist_box.get(), song_box.get())
-  #  print(lyrics)
-   # artist_box.delete(0, "end")
-    #song_box.delete(0, "end")
-
-#window = tk.Tk()
-#window.state('zoomed')
-#window.title("Song Analyzer")
-#song_box_text = tk.Label(window, text="Enter song name: ")
-#song_box = tk.Entry(window)
-#song_box_text.place(x=5, y=30)
-#song_box.place(x=180, y=30)
-#artist_box_text = tk.Label(window, text="Artist: ")
-#artist_box = tk.Entry(window)
-#artist_box_text.place(x=5, y=60)
-#artist_box.place(x=180, y=60)
-#submit_button = tk.Button(window, text="Submit", command=submit_form)
-#submit_button.place(x=255, y=90)
-
-
-#window.mainloop()
 
 
 
