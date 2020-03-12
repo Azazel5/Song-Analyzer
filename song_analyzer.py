@@ -58,8 +58,7 @@ def get_song_metadata(artist, song_title):
     response = natural_language_understanding.analyze(
     url=url,
     features=Features(metadata=MetadataOptions())).get_result()
-    print(json.dumps(response, indent=2))
-    return None
+    return json.dumps(response, indent=2)
 
 
 def analyze_emotion(lyrics):
@@ -71,8 +70,7 @@ def analyze_emotion(lyrics):
             concepts=ConceptsOptions(limit=5),
             relations=RelationsOptions())
     ).get_result()
-
-    print(json.dumps(response, indent=2))
+    return json.dumps(response, indent=2)
 
 
 

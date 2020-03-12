@@ -1,14 +1,6 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'song_layout.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.2
-#
-# WARNING! All changes made in this file will be lost!
-
-
-from PyQt5 import QtCore, QtGui, QtWidgets 
+from PyQt5 import QtCore, QtGui, QtWidgets
 from song_analyzer import get_lyrics_from_AZwebsite, get_song_metadata, analyze_emotion
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -23,9 +15,6 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName("gridLayout")
-        self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setObjectName("textBrowser")
-        self.gridLayout.addWidget(self.textBrowser, 3, 2, 1, 1)
         self.label = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Segoe Print")
@@ -33,26 +22,53 @@ class Ui_MainWindow(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
-        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout.addWidget(self.lineEdit, 0, 2, 1, 1)
+        self.artist_edit = QtWidgets.QLineEdit(self.centralwidget)
+        self.artist_edit.setObjectName("artist_edit")
+        self.gridLayout.addWidget(self.artist_edit, 1, 2, 1, 1)
+        self.info_tab = QtWidgets.QTabWidget(self.centralwidget)
+        self.info_tab.setObjectName("info_tab")
+        self.tab_5 = QtWidgets.QWidget()
+        self.tab_5.setObjectName("tab_5")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.tab_5)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.textBrowser = QtWidgets.QTextBrowser(self.tab_5)
+        self.textBrowser.setObjectName("textBrowser")
+        self.horizontalLayout.addWidget(self.textBrowser)
+        self.info_tab.addTab(self.tab_5, "")
+        self.tab_6 = QtWidgets.QWidget()
+        self.tab_6.setObjectName("tab_6")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.tab_6)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.textBrowser_3 = QtWidgets.QTextBrowser(self.tab_6)
+        self.textBrowser_3.setObjectName("textBrowser_3")
+        self.horizontalLayout_3.addWidget(self.textBrowser_3)
+        self.info_tab.addTab(self.tab_6, "")
+        self.tab_7 = QtWidgets.QWidget()
+        self.tab_7.setObjectName("tab_7")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.tab_7)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.textBrowser_2 = QtWidgets.QTextBrowser(self.tab_7)
+        self.textBrowser_2.setObjectName("textBrowser_2")
+        self.horizontalLayout_2.addWidget(self.textBrowser_2)
+        self.info_tab.addTab(self.tab_7, "")
+        self.gridLayout.addWidget(self.info_tab, 3, 2, 1, 1)
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Segoe Print")
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.gridLayout.addWidget(self.lineEdit_2, 1, 2, 1, 1)
-        self.Analyze = QtWidgets.QPushButton(self.centralwidget)
-        self.Analyze.setStyleSheet("background-color:#ffffff;\n"
+        self.song_edit = QtWidgets.QLineEdit(self.centralwidget)
+        self.song_edit.setObjectName("song_edit")
+        self.song_edit.setFocus()
+        self.gridLayout.addWidget(self.song_edit, 0, 2, 1, 1)
+        self.analyze_button = QtWidgets.QPushButton(self.centralwidget)
+        self.analyze_button.setStyleSheet("background-color:#ffffff;\n"
 "\n"
 "\n"
 "")
-        self.Analyze.setObjectName("Analyze")
-        self.Analyze.clicked.connect(self.analyze_clicked)
-        self.gridLayout.addWidget(self.Analyze, 2, 0, 1, 1)
+        self.analyze_button.setObjectName("analyze_button")
+        self.gridLayout.addWidget(self.analyze_button, 2, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 682, 21))
@@ -64,20 +80,31 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+        self.info_tab.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Song Name:</span></p></body></html>"))
+        self.info_tab.setTabText(self.info_tab.indexOf(self.tab_5), _translate("MainWindow", "Lyrics"))
+        self.info_tab.setTabText(self.info_tab.indexOf(self.tab_6), _translate("MainWindow", "Analysis"))
+        self.info_tab.setTabText(self.info_tab.indexOf(self.tab_7), _translate("MainWindow", "Metadata"))
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Artist:</span></p></body></html>"))
-        self.Analyze.setText(_translate("MainWindow", "Analyze"))
+        self.analyze_button.setText(_translate("MainWindow", "Analyze"))
+        #self.analyze_button.clicked.connect(self.analyze_clicked)
 
-    def analyze_clicked(self):
-        song_name = self.lineEdit.text()
-        artist_name = self.lineEdit_2.text()
-        lyrics = get_lyrics_from_AZwebsite(artist_name, song_name)
-        self.textBrowser.setText(lyrics)
-        print(get_song_metadata(artist_name, song_name))
-        print(analyze_emotion(lyrics))
-
+    #def analyze_clicked(self):
+      # song_name = self.song_edit.text()
+      # artist_name = self.artist_edit.text()
+      # lyrics = get_lyrics_from_AZwebsite(artist_name, song_name)
+      # emotion = analyze_emotion(lyrics)
+      # metadata = get_song_metadata(artist_name, song_name)
+      # if self.info_tab.isTabEnabled(0):
+      #     self.textBrowser.setText("Tab 1")
+      # elif self.info_tab.isTabEnabled(1):
+      #     self.textBrowser_3.setText("Tab 2")
+      # else:
+      #     self.textBrowser_2.setText("Tab 3")
+       
+  
