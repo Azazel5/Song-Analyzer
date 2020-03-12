@@ -1,7 +1,4 @@
-# Song Lyrics Analyzer
-
-
-import json
+Simport json
 import sys 
 import re
 import urllib.request
