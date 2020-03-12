@@ -1,4 +1,4 @@
-Simport json
+import json
 import sys 
 import re
 import urllib.request
