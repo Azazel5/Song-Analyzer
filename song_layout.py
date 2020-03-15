@@ -68,6 +68,7 @@ class Ui_MainWindow(object):
 "\n"
 "")
         self.analyze_button.setObjectName("analyze_button")
+        self.analyze_button.clicked.connect(self.analyze_clicked)
         self.gridLayout.addWidget(self.analyze_button, 2, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -78,7 +79,6 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
         self.retranslateUi(MainWindow)
         self.info_tab.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -92,19 +92,17 @@ class Ui_MainWindow(object):
         self.info_tab.setTabText(self.info_tab.indexOf(self.tab_7), _translate("MainWindow", "Metadata"))
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Artist:</span></p></body></html>"))
         self.analyze_button.setText(_translate("MainWindow", "Analyze"))
-        #self.analyze_button.clicked.connect(self.analyze_clicked)
 
-    #def analyze_clicked(self):
-      # song_name = self.song_edit.text()
-      # artist_name = self.artist_edit.text()
-      # lyrics = get_lyrics_from_AZwebsite(artist_name, song_name)
-      # emotion = analyze_emotion(lyrics)
-      # metadata = get_song_metadata(artist_name, song_name)
-      # if self.info_tab.isTabEnabled(0):
-      #     self.textBrowser.setText("Tab 1")
-      # elif self.info_tab.isTabEnabled(1):
-      #     self.textBrowser_3.setText("Tab 2")
-      # else:
-      #     self.textBrowser_2.setText("Tab 3")
+    def analyze_clicked(self):
+        song_name = self.song_edit.text()
+        artist_name = self.artist_edit.text()
+        lyrics = get_lyrics_from_AZwebsite(artist_name, song_name)
+        emotion = analyze_emotion(lyrics)
+        metadata = get_song_metadata(artist_name, song_name)
+   #     if self.info_tab.currentIndex() == 0: --> how to check which tab is currently active 
+        self.textBrowser.setText(lyrics)
+        self.textBrowser_2.setText(metadata)
+        self.textBrowser_3.setText(emotion)
+            
        
   
