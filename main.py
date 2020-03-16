@@ -7,6 +7,7 @@ class mywindow(QtWidgets.QMainWindow):
         super(mywindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.showMaximized()
         
 app = QtWidgets.QApplication([])
 application = mywindow()
