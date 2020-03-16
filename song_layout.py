@@ -1,7 +1,8 @@
+import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 from song_analyzer import get_lyrics_from_AZwebsite, get_song_metadata, analyze_emotion
 
-
+# Window class which will be imported in the main.py file. This sets up the GUI elements and handles the button clicks
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -81,6 +82,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.retranslateUi(MainWindow)
         self.info_tab.setCurrentIndex(0)
+        self.results = []
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -93,16 +95,89 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Artist:</span></p></body></html>"))
         self.analyze_button.setText(_translate("MainWindow", "Analyze"))
 
+    """
+        Trying to make the function analyze_clicked faster by using threads so it doesn't block the main thread.
+
+        After using the time.time() function to time the three functions used (and subtracting the variables to find the wall time 
+        elapsed for the functions), the synchronous approach has given the following results:
+        This is depending on how heavy the song lyrics are, but for colt 45 by afroman 
+        lyrics_func = 0.7155203819274902 seconds
+        emotion_func = 6.410402536392212 seconds 
+        metadata_func = 1.3229737281799316 seconds 
+
+        The multithreaded version gives these results on avergae:
+        lyrics_func = 0.7155203819274902 seconds
+        emotion_func = 4.743182182312012 seconds 
+        metadata_func = 2.018028736114502 seconds 
+
+    """
+
+    # The results list holds results from the three functions used. I have created a new thread for analyze_emotion and 
+    # get_song_metadata to reduce the time taken. The event handlers emotion_result and meta_result are connected to their 
+    # respective signals, which are created in the classes EmotionThread and MetaThread. I use a final finished handler because 
+    # the EmotionThread takes the longest to run, and I want to display all results at once.  
+    
     def analyze_clicked(self):
-        song_name = self.song_edit.text()
+        self.results = []
+        song_name = self.song_edit.text() 
         artist_name = self.artist_edit.text()
+        start1 = time.time()
         lyrics = get_lyrics_from_AZwebsite(artist_name, song_name)
-        emotion = analyze_emotion(lyrics)
-        metadata = get_song_metadata(artist_name, song_name)
-   #     if self.info_tab.currentIndex() == 0: --> how to check which tab is currently active 
-        self.textBrowser.setText(lyrics)
-        self.textBrowser_2.setText(metadata)
-        self.textBrowser_3.setText(emotion)
+        end1 = time.time()
+        print("lyr_func = ", (end1 - start1), "\n")        
+        self.emotion_function_thread = EmotionThread(lyrics)
+        self.emotion_function_thread.start()
+        self.emotion_function_thread.output.connect(self.emotion_result)
+        self.emotion_function_thread.finished.connect(self.emotion_thread_finished)
+        self.meta_function_thread = MetaThread(artist_name, song_name)
+        self.meta_function_thread.output.connect(self.meta_result)
+        self.meta_function_thread.start()
+        self.results.append(lyrics)
+    
+    def emotion_result(self, text2):
+        self.results.append(text2)
+
+    def meta_result(self, text3):
+        self.results.append(text3)
+
+    def emotion_thread_finished(self):
+        self.textBrowser.setText(self.results[0])
+        self.textBrowser_2.setText(self.results[1])
+        self.textBrowser_3.setText(self.results[2])
+
+
+class EmotionThread(QtCore.QThread):
+    
+    output = QtCore.pyqtSignal('PyQt_PyObject')
+    def __init__(self, lyrics, parent=None):
+        QtCore.QThread.__init__(self, parent)
+        self.lyrics = lyrics 
+    
+    def run(self):
+        start2 = time.time()
+        emotion = analyze_emotion(self.lyrics)
+        end2 = time.time()
+        print("em_func = ", (end2 - start2), "\n")
+        self.output.emit(emotion)
+
+class MetaThread(QtCore.QThread):
+    
+    output = QtCore.pyqtSignal('PyQt_PyObject')
+    def __init__(self, artist, song, parent=None):
+        QtCore.QThread.__init__(self, parent)
+        self.artist_name = artist
+        self.song_name = song 
+    
+    def run(self):
+        start3 = time.time()
+        meta = get_song_metadata(self.artist_name, self.song_name)
+        end3 = time.time()
+        print("met_func = ", (end3 - start3), "\n")
+        self.output.emit(meta)
+
+
+    
+        
             
        
   

@@ -61,13 +61,15 @@ def get_song_metadata(artist, song_title):
 def analyze_emotion(lyrics):
     response = natural_language_understanding.analyze(
         text=lyrics,
-        features=Features(
+        features=Features( 
             entities=EntitiesOptions(emotion=True, sentiment=True, limit=5),
             keywords=KeywordsOptions(emotion=True, sentiment=True, limit=10),
             concepts=ConceptsOptions(limit=5),
             relations=RelationsOptions())
     ).get_result()
     return json.dumps(response, indent=2)
+
+
 
 
 
