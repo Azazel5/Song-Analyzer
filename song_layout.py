@@ -1,3 +1,5 @@
+# Setting up a virtual environment 
+
 import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 from song_analyzer import get_lyrics_from_AZwebsite, get_song_metadata, analyze_emotion
