@@ -67,6 +67,7 @@ def analyze_emotion(lyrics):
             concepts=ConceptsOptions(limit=5),
             relations=RelationsOptions())
     ).get_result()
+    
     return json.dumps(response, indent=2)
 
 
